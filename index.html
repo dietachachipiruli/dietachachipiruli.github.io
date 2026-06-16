@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2d6a4f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Plan de dieta semanal interactivo">
+  <title>🥗 Plan de Dieta</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- LOADING -->
+  <div id="loading">
+    <div class="spinner"></div>
+    <p>Cargando plan de dieta…</p>
+  </div>
+
+  <!-- APP (hidden until loaded) -->
+  <div id="app" style="display:none">
+
+    <!-- HEADER -->
+    <header>
+      <div class="header-inner">
+        <div class="app-title">🥗 Mi Dieta  <span>— 6 semanas</span></div>
+        <div class="header-actions">
+          <button class="btn-icon" id="btn-reset" title="Reiniciar progreso" aria-label="Reiniciar progreso">🗑️</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- WEEK TABS -->
+    <nav class="week-nav" aria-label="Semanas">
+      <div class="week-tabs" id="week-tabs" role="tablist"></div>
+    </nav>
+
+    <!-- MAIN -->
+    <main id="main-content" role="main"></main>
+
+    <!-- BOTTOM NAV -->
+    <nav class="bottom-nav" aria-label="Navegación rápida">
+      <div class="bottom-nav-inner">
+        <button class="nav-btn" id="nav-prev" aria-label="Semana anterior">
+          <span class="icon">◀</span>
+          <span>Anterior</span>
+        </button>
+        <button class="nav-btn" id="nav-today" aria-label="Ir a hoy">
+          <span class="icon">📅</span>
+          <span>Hoy</span>
+        </button>
+        <button class="nav-btn" id="nav-next" aria-label="Semana siguiente">
+          <span class="icon">▶</span>
+          <span>Siguiente</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- TOAST -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  </div><!-- /#app -->
+
+  <script type="module" src="script.js"></script>
+  <script>
+    // Bottom nav wiring (after module loads, events are delegated)
+    document.addEventListener('DOMContentLoaded', () => {
+      // These fire after the module initialises via event delegation
+      document.getElementById('nav-prev').addEventListener('click', () => {
+        window.__dietPrevWeek && window.__dietPrevWeek();
+      });
+      document.getElementById('nav-next').addEventListener('click', () => {
+        window.__dietNextWeek && window.__dietNextWeek();
+      });
+      document.getElementById('nav-today').addEventListener('click', () => {
+        window.__dietGoToday && window.__dietGoToday();
+      });
+    });
+  </script>
+</body>
+</html>
